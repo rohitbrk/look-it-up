@@ -79,8 +79,6 @@ function App() {
   return (
     <>
       <div>
-        <SearchComponent data={data} />
-
         {showManageColumns ? (
           <ManageColumns columns={columns} toggleChecked={toggleChecked} />
         ) : (
