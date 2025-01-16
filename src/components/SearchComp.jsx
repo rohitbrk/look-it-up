@@ -1,11 +1,10 @@
-const SearchComp = ({ searchStr, setSearchStr, handleSearchStr }) => {
+const SearchComp = ({ searchStr, handleFilteredList }) => {
   return (
     <input
       placeholder="Search by name"
       value={searchStr}
       onChange={(e) => {
-        setSearchStr((prev) => e.target.value);
-        handleSearchStr(e);
+        handleFilteredList(e);
       }}
     />
   );

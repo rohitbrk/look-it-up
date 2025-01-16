@@ -4,6 +4,7 @@ import TableHeader from "./components/TableHeader";
 import jsonData from "./data/data.json";
 import SearchComp from "./components/SearchComp";
 import ManageColumns from "./components/ManageColumns";
+import SearchComponent from "./components/Test";
 
 function sortOrder(key, order = "asc") {
   return function (a, b) {
@@ -38,15 +39,16 @@ function App() {
     jsonData.sort(sortOrder("id", "asc"))
   );
 
-  const handleSearchStr = (e) => {
-    const name = e.target.value;
-    console.log(e.target.value);
+  const handleFilteredList = (e) => {
+    setSearchStr((prev) => e.target.value);
     if (e.target.value === "")
       setFilteredData((prev) => jsonData.sort(sortOrder("id", "asc")));
     else {
-      const filteredItems = filteredData.filter((item) =>
-        item.name.toUpperCase().includes(name.toUpperCase())
-      );
+      const filteredItems = jsonData
+        .sort(sortOrder("id", "asc"))
+        .filter((item) => {
+          return item.name.toUpperCase().includes(e.target.value.toUpperCase());
+        });
       setFilteredData((prev) => filteredItems);
     }
   };
@@ -65,9 +67,21 @@ function App() {
     setSorting((prev) => ({ ...sorting, column, order }));
   };
 
+  const data = [
+    "Apple",
+    "Banana",
+    "Cherry",
+    "Date",
+    "Elderberry",
+    "Fig",
+    "Grape",
+  ];
+
   return (
     <>
       <div>
+        <SearchComponent data={data} />
+
         {showManageColumns ? (
           <ManageColumns columns={columns} toggleChecked={toggleChecked} />
         ) : (
@@ -80,8 +94,7 @@ function App() {
         }
         <SearchComp
           searchStr={searchStr}
-          setSearchStr={setSearchStr}
-          handleSearchStr={handleSearchStr}
+          handleFilteredList={handleFilteredList}
         />
         <TableHeader
           columns={columns}
