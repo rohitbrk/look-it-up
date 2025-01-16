@@ -5,7 +5,7 @@ import jsonData from "./data/data.json";
 import SearchComp from "./components/SearchComp";
 import { sortOrder } from "./utils/sortOrder";
 import { getColumnsFromJson } from "./utils/getColumnsFromJson";
-import ManageColumnsModal from "./components/ManageColumnsModal";
+import ManageColumns from "./components/ManageColumns";
 
 function App() {
   const initialData = jsonData.sort(sortOrder("id", "asc"));
@@ -55,7 +55,7 @@ function App() {
           filterBasedOnColumn={filterBasedOnColumn}
           setFilterBasedOnColumn={setFilterBasedOnColumn}
           rightSideComponent={
-            <ManageColumnsModal
+            <ManageColumns
               showManageColumns={showManageColumns}
               setShowManageColumns={setShowManageColumns}
               columns={columns}
