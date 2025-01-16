@@ -1,3 +1,5 @@
+import React from "react";
+
 const SearchComp = ({
   columns,
   searchStr,
@@ -6,32 +8,29 @@ const SearchComp = ({
   setFilterBasedOnColumn,
 }) => {
   return (
-    <div>
-      <input
-        placeholder="Search by name"
-        value={searchStr}
-        onChange={(e) => {
-          handleFilteredList(e);
-        }}
-      />
-      <select
-        value={filterBasedOnColumn}
-        onChange={(e) => setFilterBasedOnColumn((prev) => e.target.value)}
-      >
-        {columns.map((column) => {
-          if (column.name === "name")
-            return (
-              <option value={column.name} key={column.name} selected>
-                {column.name}
-              </option>
-            );
-          return (
+    <div className="w-full">
+      <div className="flex flex-row gap-4 p-4 font-sans justify-center">
+        <input
+          type="text"
+          placeholder="Search by name"
+          value={searchStr}
+          onChange={handleFilteredList}
+          className="p-2 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          aria-label="Search"
+        />
+        <select
+          value={filterBasedOnColumn}
+          onChange={(e) => setFilterBasedOnColumn(e.target.value)}
+          className="p-2 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          aria-label="Select Column"
+        >
+          {columns.map((column) => (
             <option value={column.name} key={column.name}>
               {column.name}
             </option>
-          );
-        })}
-      </select>
+          ))}
+        </select>
+      </div>
     </div>
   );
 };

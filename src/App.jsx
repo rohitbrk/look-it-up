@@ -72,12 +72,19 @@ function App() {
           filterBasedOnColumn={filterBasedOnColumn}
           setFilterBasedOnColumn={setFilterBasedOnColumn}
         />
-        <TableHeader
-          columns={columns}
-          handleSort={handleSort}
-          sorting={sorting}
-        />
-        <TableData columns={columns} filteredData={filteredData} />
+        <div className="w-full flex items-center justify-center">
+          <div className="overflow-x-auto w-full sm:w-8/12 p-4">
+            <table className="min-w-full table-auto table-fixed">
+              <TableHeader
+                columns={columns}
+                handleSort={handleSort}
+                sorting={sorting}
+              />
+
+              <TableData columns={columns} filteredData={filteredData} />
+            </table>
+          </div>
+        </div>
       </div>
     </>
   );

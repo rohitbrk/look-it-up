@@ -13,13 +13,20 @@ const HeaderCell = ({ column, sorting, handleSort }) => {
   return (
     <th
       key={column}
-      className={`border border-gray-300 text-left p-2 ${
-        sorting.column === column ? "opacity-100" : "opacity-50"
-      }`}
+      className={`border border-gray-300 text-left p-3 cursor-pointer 
+        hover:bg-gray-100 
+        transition-all duration-200 ease-in-out
+        ${
+          sorting.column === column
+            ? "bg-gray-200 text-gray-800 font-semibold"
+            : "opacity-70"
+        }`}
       onClick={() => handleSort(column, nextSortingOrder)}
     >
-      {column}
-      {order ? <span>▼</span> : <span>▲</span>}
+      <div className="flex items-center justify-between">
+        <span>{column}</span>
+        <span className="text-sm ml-2">{order ? "▼" : "▲"}</span>
+      </div>
     </th>
   );
 };
