@@ -23,8 +23,7 @@ function App() {
 
   const handleFilteredList = (e) => {
     setSearchStr((prev) => e.target.value);
-    if (e.target.value === "")
-      setFilteredData((prev) => jsonData.sort(sortOrder("id", "asc")));
+    if (e.target.value === "") setFilteredData((prev) => initialData);
     else {
       const filteredItems = initialData.filter((item) => {
         const _item = {};
