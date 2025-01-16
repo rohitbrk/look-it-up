@@ -6,6 +6,7 @@ const SearchComp = ({
   handleFilteredList,
   filterBasedOnColumn,
   setFilterBasedOnColumn,
+  rightSideComponent,
 }) => {
   return (
     <div className="w-full">
@@ -30,6 +31,7 @@ const SearchComp = ({
             </option>
           ))}
         </select>
+        {rightSideComponent}
       </div>
     </div>
   );

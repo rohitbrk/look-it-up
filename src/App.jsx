@@ -52,25 +52,34 @@ function App() {
     setSorting((prev) => ({ ...sorting, column, order }));
   };
 
+  // return <PaginatedList />;
+
   return (
     <>
-      <div>
-        {showManageColumns ? (
-          <ManageColumns columns={columns} toggleChecked={toggleChecked} />
-        ) : (
-          <div></div>
-        )}
-        {
-          <button onClick={() => setShowManageColumns((prev) => !prev)}>
-            {showManageColumns ? "Close" : "Manage Columns"}
-          </button>
-        }
+      <div className="mt-4">
         <SearchComp
           columns={columns}
           searchStr={searchStr}
           handleFilteredList={handleFilteredList}
           filterBasedOnColumn={filterBasedOnColumn}
           setFilterBasedOnColumn={setFilterBasedOnColumn}
+          rightSideComponent={
+            <div>
+              <button
+                onClick={() => setShowManageColumns((prev) => !prev)}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 focus:outline-none"
+              >
+                Manage Columns
+              </button>
+              {showManageColumns && (
+                <ManageColumns
+                  columns={columns}
+                  toggleChecked={toggleChecked}
+                  onClose={() => setShowManageColumns(false)}
+                />
+              )}
+            </div>
+          }
         />
         <div className="w-full flex items-center justify-center">
           <div className="overflow-x-auto w-full sm:w-8/12 p-4">
