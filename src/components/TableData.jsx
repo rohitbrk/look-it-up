@@ -3,11 +3,16 @@ const TableData = ({ columns, data }) => {
     <tbody>
       {data.map((item) => (
         <tr key={item.id}>
-          {columns.map((column) => (
-            <td className="border border-gray-300 text-left p-2" key={column}>
-              {item[column]}
-            </td>
-          ))}
+          {columns
+            .filter((column) => column.checked)
+            .map((column) => (
+              <td
+                className="border border-gray-300 text-left p-2"
+                key={column.name}
+              >
+                {item[column.name]}
+              </td>
+            ))}
         </tr>
       ))}
     </tbody>

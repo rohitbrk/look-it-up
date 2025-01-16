@@ -4,9 +4,9 @@ const TableHeader = ({ columns, handleSort, sorting }) => {
   return (
     <thead>
       <tr className="flex">
-        {columns.map((column) => (
+        {columns.filter((column) => column.checked).map((column) => (
           <HeaderCell
-            column={column}
+            column={column.name}
             sorting={sorting}
             handleSort={handleSort}
           />

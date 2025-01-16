@@ -2,6 +2,8 @@ import { useState } from "react";
 import TableData from "./components/TableData";
 import TableHeader from "./components/TableHeader";
 import jsonData from "./data/data.json";
+import SearchComp from "./components/SearchComp";
+import ManageColumns from "./components/ManageColumns";
 
 function sortOrder(key, order = "asc") {
   return function (a, b) {
@@ -23,29 +25,70 @@ function sortOrder(key, order = "asc") {
 
 function App() {
   const [columns, setColumns] = useState([
-    "id",
-    "name",
-    "date",
-    "status",
-    "amount",
+    { name: "id", checked: true },
+    { name: "name", checked: true },
+    { name: "date", checked: true },
+    { name: "status", checked: true },
+    { name: "amount", checked: true },
   ]);
-  const [data, setData] = useState(jsonData.sort(sortOrder("id", "asc")));
+  const [searchStr, setSearchStr] = useState("");
   const [sorting, setSorting] = useState({ column: "id", order: "asc" });
+  const [showManageColumns, setShowManageColumns] = useState(false);
+  const [filteredData, setFilteredData] = useState(
+    jsonData.sort(sortOrder("id", "asc"))
+  );
+
+  const handleSearchStr = (e) => {
+    const name = e.target.value;
+    console.log(e.target.value);
+    if (e.target.value === "")
+      setFilteredData((prev) => jsonData.sort(sortOrder("id", "asc")));
+    else {
+      const filteredItems = filteredData.filter((item) =>
+        item.name.toUpperCase().includes(name.toUpperCase())
+      );
+      setFilteredData((prev) => filteredItems);
+    }
+  };
+
+  const toggleChecked = (name) => {
+    let updatedColumns = [...columns];
+    updatedColumns = updatedColumns.map((item) => {
+      if (item.name === name) return { ...item, checked: !item.checked };
+      else return item;
+    });
+    setColumns(updatedColumns);
+  };
 
   const handleSort = (column, order) => {
-    setData((prev) => [...data].sort(sortOrder(column, order)));
+    setFilteredData((prev) => [...filteredData].sort(sortOrder(column, order)));
     setSorting((prev) => ({ ...sorting, column, order }));
   };
 
   return (
     <>
       <div>
+        {showManageColumns ? (
+          <ManageColumns columns={columns} toggleChecked={toggleChecked} />
+        ) : (
+          <div></div>
+        )}
+        {
+          <button onClick={() => setShowManageColumns((prev) => !prev)}>
+            {showManageColumns ? "Close" : "Manage Columns"}
+          </button>
+        }
+        <SearchComp
+          searchStr={searchStr}
+          setSearchStr={setSearchStr}
+          handleSearchStr={handleSearchStr}
+        />
         <TableHeader
           columns={columns}
           handleSort={handleSort}
           sorting={sorting}
         />
-        <TableData columns={columns} data={data} />
+        <TableData columns={columns} data={filteredData} />
       </div>
     </>
   );
