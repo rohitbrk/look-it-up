@@ -4,7 +4,6 @@ import TableHeader from "./components/TableHeader";
 import jsonData from "./data/data.json";
 import SearchComp from "./components/SearchComp";
 import ManageColumns from "./components/ManageColumns";
-import SearchComponent from "./components/Test";
 
 function sortOrder(key, order = "asc") {
   return function (a, b) {
