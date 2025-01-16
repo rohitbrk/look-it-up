@@ -27,7 +27,11 @@ function App() {
       setFilteredData((prev) => jsonData.sort(sortOrder("id", "asc")));
     else {
       const filteredItems = initialData.filter((item) => {
-        return item[filterBasedOnColumn]
+        const _item = {};
+        for (const key in item) {
+          _item[key] = item[key].toString();
+        }
+        return _item[filterBasedOnColumn]
           .toUpperCase()
           .includes(e.target.value.toUpperCase());
       });
