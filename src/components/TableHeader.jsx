@@ -1,11 +1,15 @@
-const TableHeader = ({ columns }) => {
+import HeaderCell from "./HeaderCell";
+
+const TableHeader = ({ columns, handleSort, sorting }) => {
   return (
     <thead>
-      <tr>
+      <tr className="flex">
         {columns.map((column) => (
-          <th key={column} className="border border-gray-300 text-left p-2">
-            {column}
-          </th>
+          <HeaderCell
+            column={column}
+            sorting={sorting}
+            handleSort={handleSort}
+          />
         ))}
       </tr>
     </thead>
