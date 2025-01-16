@@ -13,7 +13,7 @@ const SearchComp = ({
       <div className="flex flex-row gap-4 p-4 font-sans justify-center">
         <input
           type="text"
-          placeholder="Search by name"
+          placeholder="Search.."
           value={searchStr}
           onChange={handleFilteredList}
           className="p-2 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
