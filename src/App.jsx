@@ -38,6 +38,8 @@ function App() {
     jsonData.sort(sortOrder("id", "asc"))
   );
 
+  const [filterBasedOnColumn, setFilterBasedOnColumn] = useState("name");
+
   const handleFilteredList = (e) => {
     setSearchStr((prev) => e.target.value);
     if (e.target.value === "")
@@ -46,7 +48,9 @@ function App() {
       const filteredItems = jsonData
         .sort(sortOrder("id", "asc"))
         .filter((item) => {
-          return item.name.toUpperCase().includes(e.target.value.toUpperCase());
+          return item[filterBasedOnColumn]
+            .toUpperCase()
+            .includes(e.target.value.toUpperCase());
         });
       setFilteredData((prev) => filteredItems);
     }
@@ -90,8 +94,11 @@ function App() {
           </button>
         }
         <SearchComp
+          columns={columns}
           searchStr={searchStr}
           handleFilteredList={handleFilteredList}
+          filterBasedOnColumn={filterBasedOnColumn}
+          setFilterBasedOnColumn={setFilterBasedOnColumn}
         />
         <TableHeader
           columns={columns}
