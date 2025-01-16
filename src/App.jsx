@@ -32,8 +32,7 @@ function App() {
   const [data, setData] = useState(jsonData.sort(sortOrder("id", "asc")));
   const [sorting, setSorting] = useState({ column: "id", order: "asc" });
 
-  const handleSort = ({ column, order }) => {
-    console.log(column, order);
+  const handleSort = (column, order) => {
     setData((prev) => [...data].sort(sortOrder(column, order)));
     setSorting((prev) => ({ ...sorting, column, order }));
   };

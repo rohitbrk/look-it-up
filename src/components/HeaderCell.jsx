@@ -13,8 +13,10 @@ const HeaderCell = ({ column, sorting, handleSort }) => {
   return (
     <th
       key={column}
-      className="border border-gray-300 text-left p-2"
-      onClick={() => handleSort({ column, order: nextSortingOrder })}
+      className={`border border-gray-300 text-left p-2 ${
+        sorting.column === column ? "opacity-100" : "opacity-50"
+      }`}
+      onClick={() => handleSort(column, nextSortingOrder)}
     >
       {column}
       {order ? <span>▼</span> : <span>▲</span>}
