@@ -8,13 +8,18 @@ import { sortOrder } from "./utils/sortOrder";
 
 function App() {
   const initialData = jsonData.sort(sortOrder("id", "asc"));
-  const [columns, setColumns] = useState([
-    { name: "id", checked: true },
-    { name: "name", checked: true },
-    { name: "date", checked: true },
-    { name: "status", checked: true },
-    { name: "amount", checked: true },
-  ]);
+  const [columns, setColumns] = useState(() => {
+    let columns_ = [];
+    for (let key in initialData[0]) {
+      columns_.push(key);
+    }
+    let columnArray = [];
+    for (let key of columns_) {
+      columnArray.push({ name: key, checked: true });
+    }
+    return columnArray;
+  });
+
   const [searchStr, setSearchStr] = useState("");
   const [sorting, setSorting] = useState({ column: "id", order: "asc" });
   const [showManageColumns, setShowManageColumns] = useState(false);
