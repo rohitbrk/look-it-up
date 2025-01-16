@@ -1,7 +1,7 @@
-const TableData = ({ columns, data }) => {
+const TableData = ({ columns, filteredData }) => {
   return (
     <tbody>
-      {data.map((item) => (
+      {filteredData.map((item) => (
         <tr key={item.id}>
           {columns
             .filter((column) => column.checked)

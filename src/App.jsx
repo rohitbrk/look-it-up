@@ -4,26 +4,10 @@ import TableHeader from "./components/TableHeader";
 import jsonData from "./data/data.json";
 import SearchComp from "./components/SearchComp";
 import ManageColumns from "./components/ManageColumns";
-
-function sortOrder(key, order = "asc") {
-  return function (a, b) {
-    let itemA = typeof a[key] === "string" ? a[key].toUpperCase() : a[key];
-    let itemB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
-
-    if (key === "date") {
-      itemA = new Date(a[key]);
-      itemB = new Date(b[key]);
-    }
-
-    let comparisonValue = 0;
-    if (itemA > itemB) comparisonValue = 1;
-    else if (itemA < itemB) comparisonValue = -1;
-
-    return order === "desc" ? comparisonValue * -1 : comparisonValue;
-  };
-}
+import { sortOrder } from "./utils/sortOrder";
 
 function App() {
+  const initialData = jsonData.sort(sortOrder("id", "asc"));
   const [columns, setColumns] = useState([
     { name: "id", checked: true },
     { name: "name", checked: true },
@@ -34,10 +18,7 @@ function App() {
   const [searchStr, setSearchStr] = useState("");
   const [sorting, setSorting] = useState({ column: "id", order: "asc" });
   const [showManageColumns, setShowManageColumns] = useState(false);
-  const [filteredData, setFilteredData] = useState(
-    jsonData.sort(sortOrder("id", "asc"))
-  );
-
+  const [filteredData, setFilteredData] = useState(initialData);
   const [filterBasedOnColumn, setFilterBasedOnColumn] = useState("name");
 
   const handleFilteredList = (e) => {
@@ -45,13 +26,11 @@ function App() {
     if (e.target.value === "")
       setFilteredData((prev) => jsonData.sort(sortOrder("id", "asc")));
     else {
-      const filteredItems = jsonData
-        .sort(sortOrder("id", "asc"))
-        .filter((item) => {
-          return item[filterBasedOnColumn]
-            .toUpperCase()
-            .includes(e.target.value.toUpperCase());
-        });
+      const filteredItems = initialData.filter((item) => {
+        return item[filterBasedOnColumn]
+          .toUpperCase()
+          .includes(e.target.value.toUpperCase());
+      });
       setFilteredData((prev) => filteredItems);
     }
   };
@@ -69,16 +48,6 @@ function App() {
     setFilteredData((prev) => [...filteredData].sort(sortOrder(column, order)));
     setSorting((prev) => ({ ...sorting, column, order }));
   };
-
-  const data = [
-    "Apple",
-    "Banana",
-    "Cherry",
-    "Date",
-    "Elderberry",
-    "Fig",
-    "Grape",
-  ];
 
   return (
     <>
@@ -105,7 +74,7 @@ function App() {
           handleSort={handleSort}
           sorting={sorting}
         />
-        <TableData columns={columns} data={filteredData} />
+        <TableData columns={columns} filteredData={filteredData} />
       </div>
     </>
   );
